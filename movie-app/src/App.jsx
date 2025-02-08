@@ -1,9 +1,10 @@
 import React from 'react'
+import Home from './components/Home'
 
 const App = () => {
   return (
     <div>
-      <h1 className='bg-blue-200 text-6xl'>Naeveen</h1>
+      <Home/>
     </div>
   )
 }
