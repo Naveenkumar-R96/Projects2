@@ -8,7 +8,7 @@ const Card = ({ cardWidth, movie }) => {
   return (
     <div
       style={{ width: cardWidth }}
-      className="h-[650px] relative flex justify-center items-center shrink-0 p-2  group"
+      className="h-[550px] relative flex justify-center items-center shrink-0 p-2  group max-sm:h-[300px] w-[250px] "
     >
       <motion.div
         initial={{ opacity: 0 }}
