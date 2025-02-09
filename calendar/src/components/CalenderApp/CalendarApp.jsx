@@ -65,13 +65,19 @@ const CalendarApp = () => {
     );
   };
 
+  const handleDeleteEvent = (event) => {
+    setDeletingEvent(event);
+    setEvents(events.filter((e) => e.id !== event.id));
+
+  }
+
   const handleEventSubmit = () => {
     const newEvent = {
-      id: editingEvent ? id : Date.now(),
+      id: editingEvent ? editingEvent.id : Date.now(),
       date: setlectedDate,
       time: `${eventTime.hours.padStart(2, "0")}:${eventTime.minute.padStart(
-        2,
-        "0"
+      2,
+      "0"
       )}`,
       text: eventText,
     };
@@ -108,6 +114,12 @@ const CalendarApp = () => {
       setEditingEvent(event);
       setShowEventPopup(true);
     };
+
+      const handleEnter = (e) => {
+        if (e.key ==="Enter"){
+          handleEventSubmit()
+        }
+      }
   return (
     <div className="calendar-app">
       <div className="calendar">
@@ -180,6 +192,7 @@ const CalendarApp = () => {
               id=""
               value={eventText}
               onChange={(e) => setEventText(e.target.value)}
+              onKeyDown={(e) =>handleEnter(e) }
             ></textarea>
             <button className="event-popup-btn" onClick={handleEventSubmit}>
               Add Event
@@ -193,25 +206,28 @@ const CalendarApp = () => {
           </div>
         )}
 
-        {events.map((event, index) => {
+        { events.length === 0 ? (<><h1 className="no-event">No items</h1></>) : (events.map((event, index) => {
           return (
             <div className="event" key={index}>
               <div className="event-date-wrapper">
                 <div className="event-date">
                   {`${
-                    monthsOfYear[event.date.getMonth()]
-                  } ${event.date.getDate()} ${event.date.getFullYear()}`}
+                    monthsOfYear[new Date(event.date).getMonth()]
+                  } ${new Date(event.date).getDate()} ${new Date(event.date).getFullYear()}`}
                 </div>
                 <div className="event-time">{event.time}</div>
               </div>
               <div className="event-text">{event.text}</div>
               <div className="event-button">
                 <i className="bx bxs-edit-alt" onClick={()=>handleEditEvent(event)}></i>
-                <i className="bx bxs-message-alt"></i>
+                <i className="bx bxs-message-alt" onClick={()=>handleDeleteEvent(event)}></i>
               </div>
             </div>
           );
-        })}
+        }))
+        }
+
+        
       </div>
     </div>
   );
