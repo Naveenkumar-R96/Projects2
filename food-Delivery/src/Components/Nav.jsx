@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { dataContext } from "../Pages/Context";
 import { food_items } from "../../food";
 const Nav = ({yes,setYes}) => {
-  let { input, setInput ,cate,setCate} = useContext(dataContext);
+  let { input, setInput ,cate,setCate,totalItems} = useContext(dataContext);
   useEffect(()=>{
     const updatedItems = cate.filter((item) => {
       return item.food_name.toLowerCase().includes(input.toLowerCase());
@@ -36,7 +36,7 @@ const Nav = ({yes,setYes}) => {
 
       <div className="w-[60px] h-[60px] bg-white flex justify-center items-center rounded-md shadow-xl relative" onClick={()=>setYes(true)}>
         <span className="absolute top-0  right-2 text-green-500 font-bold text-[18px]">
-          0
+          {totalItems}
         </span>
         <FaShoppingBag className="w-[30px] h-[30px] text-green-600" />
       </div>

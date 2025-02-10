@@ -1,6 +1,8 @@
 import React from "react";
-
-const Card = ({ name, image, id, price, type }) => {
+import { dataContext } from "../Pages/Context";
+import { useContext } from "react";
+const Card = ({ name, image, id, price, type ,item}) => {
+  const {addingItem,addItem} = useContext(dataContext)
   return (
     <div className=" ">
       <div className="w-[280px] h-auto max-h-[380px] min-h-[280px] bg-white p-2 mb-2 rounded-lg shadow-lg ">
@@ -11,7 +13,13 @@ const Card = ({ name, image, id, price, type }) => {
         </div>
         <div>
           <h1 className="ml-4 mt-2 text-green-500 font-semibold">{type}</h1>
-          <button className="bg-green-300 w-full rounded-lg mt-3 p-3 text-gray-600 font-semibold hover:bg-green-400">Add to Dish</button>
+          <button
+            className="bg-green-300 w-full rounded-lg mt-3 p-3 text-gray-600 font-semibold hover:bg-green-400"
+            onClick={() => addingItem(item)}
+            disabled={addItem.includes(item)}
+          >
+            {addItem.includes(item) ? "Added" : "Add to Cart"}
+          </button>
         </div>
       </div>
     </div>

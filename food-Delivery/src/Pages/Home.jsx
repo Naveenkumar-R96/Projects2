@@ -5,10 +5,12 @@ import Card from "../Components/Card";
 import { food_items } from "../../food";
 import { dataContext } from "./Context";
 import { ImCross } from "react-icons/im";
+import { useEffect } from "react";
 import Card2 from "../Components/Card2";
+import {motion} from "framer-motion";
 
 const Home = () => {
-  const { cate, setCate, input } = useContext(dataContext);
+  const { cate, setCate, input ,yes,setYes} = useContext(dataContext);
 
   const filteration = (Category) => {
     if (Category === "All") {
@@ -22,10 +24,19 @@ const Home = () => {
     console.log(cate);
   };
 
-  const [yes,setYes] = useState(false)
+  
+
+  
+    useEffect(() => {
+      if (yes) {
+        document.body.classList.add('no-scroll');
+      } else {
+        document.body.classList.remove('no-scroll');
+      }
+    }, [yes]);
 
   return (
-    <div className=" bg-slate-200 w-full min-h-screen">
+    <div className=" bg-slate-200 w-full min-h-screen" >
       <Nav yes={yes} setYes={setYes} />
       {!input ? (
         <div className="flex flex-wrap justify-center items-center gap-5 w-[100%]">
@@ -51,27 +62,31 @@ const Home = () => {
             price={item.price}
             id={item.id}
             type={item.food_type}
+            item={item}
           />
         ))}
       </div>
 
       {yes ? (
-        <div
-          className={` max-md:w-full w-[40vw] h-[100%] fixed top-0 right-0 bg-white shadow-lg p-6 transition-transform duration-1000 ${
-            yes ? "translate-x-0" : "translate-x-full"
+        <motion.div
+          className={` max-md:w-full w-[40vw] h-[100%] fixed top-0 right-0 bg-white shadow-lg p-6 overflow-y-scroll transition-transform duration-1000 ${
+            yes ? "translate-x-0" : "translate-x-full z-50"
           }`}
+          initial={{ x:500 }}
+          animate={{ x:0 }}
+          transition={{ duration: 0.1 }}
         >
           <header className="w-[100%] flex justify-between items-center ">
             <span className="text-green-400 text-[18px] font-semibold">
               Order Items
             </span>
             <ImCross
-              className="text-green-400 text-[18px] font-semibold w-5 h-5 cursor-pointer hover:text-black duration-500"
+              className="text-green-400 text-[18px] font-semibold w-5 h-5 cursor-pointer hover:text-black duration-500 transition-all"
               onClick={() => setYes(false)}
             />
           </header>
           <Card2/>
-        </div>
+        </motion.div>
       ) : null}
     </div>
   );
