@@ -87,7 +87,7 @@ const Home = () => {
       <div className="relative flex justify-center items-center min-h-screen">
         <Navigation page={page} setPage={setPage} setGroup={setGroup} />
         <motion.div
-          className="flex justify-center items-center fixed top-0 left-0 overflow-hidden max-sm:absolute"
+          className="flex justify-center items-center absolute top-0 left-0 overflow-hidden max-sm:fixed"
           style={{ width: wrapperWidth, translateX, translateY }}
           ref={cardRef}
           onMouseMove={(e) => getMousePosition(e, cardRef.current)}
