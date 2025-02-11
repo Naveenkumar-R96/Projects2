@@ -83,7 +83,7 @@ const Card2 = () => {
       )}
 
       {form && (
-        <div className="w-[40vw] bg-white fixed top-0 right-0 h-[100%] max-md:w-full">
+        <div className="w-[40vw] bg-white fixed top-0 right-0 h-[100%] max-md:w-full overflow-y-scroll z-50">
           <Form setForm={setForm} />
         </div>
       )}

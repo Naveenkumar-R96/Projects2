@@ -4,7 +4,7 @@ import { ImCross } from "react-icons/im";
 const Confirm = ({setValue,setForm}) => {
   return (
     <div>
-      <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50">
+      <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 px-3">
           <div className="bg-white p-7 rounded-lg shadow-lg w-[400px] h-auto">
             <div className="flex justify-between border-b-2 border-green-400 p-2">
               <h1 className="font-semibold text-xl">Order Placed</h1>

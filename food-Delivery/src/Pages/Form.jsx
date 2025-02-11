@@ -55,11 +55,11 @@ const Form = ({ setForm }) => {
 
   return (
     <>
-      <div className="bg-gray-200 h-auto min-h-screen  ">
-        <div className="flex justify-center items-center h-[80%] p-2 ">
+      <div className="bg-gray-200 h-auto min-h-screen flex justify-center flex-col p-3 py-3 gap-y-2 ">
+        <div className="flex justify-center items-center h-[70%] p-2 mt-3 ">
           <form
             action=""
-            className="bg-white p-5 w-full rounded-xl shadow-lg"
+            className="bg-white p-5 w-full rounded-xl shadow-lg "
             onSubmit={handleSubmit}
           >
             <div className="flex flex-col gap-3 justify-between items-center">
@@ -78,7 +78,7 @@ const Form = ({ setForm }) => {
                 placeholder="Murugan"
                 className="border-2 border-green-300 block w-full py-1 rounded-lg text-center focus:outline-none"
                 name="buildingName"
-                value={errors.buildingName ? errors.buildingName : values.buildingName}
+                value={values.buildingName}
                
                 onChange={handleChange}
               />
@@ -136,7 +136,7 @@ const Form = ({ setForm }) => {
             </div>
           </form>
         </div>
-        <div className="flex justify-between px-5 mt-7 z-10">
+        <div className="flex justify-between px-5 ">
           <button
             className="bg-red-400 px-4 py-2 text-white text-xl font-medium rounded-lg"
             onClick={() => setForm(false)}
