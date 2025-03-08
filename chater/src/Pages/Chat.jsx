@@ -1,20 +1,32 @@
-import React from 'react'
-import { useContext } from 'react'
-import { dataContext } from '../contents/UserContext'
+import React from "react";
+import { useContext } from "react";
+import { dataContext, prevUser } from "../contents/UserContext";
 const Chat = () => {
-  let {input,setInput,prevInput,setPrevInput}=useContext(dataContext)
+  let { input, setInput, prevInput, setPrevInput, showResult, setShowResult,feature,setFeature ,prevFeature,setPrevFeture} =
+    useContext(dataContext);
   return (
-    <div className='chat-page'>
+    <div className="chat-page">
       <div className="user">
-        <img src="" alt="" />
-        <span>{prevInput}</span>
+        {prevFeature == "upImg" ? (
+          <>
+            <img src={prevUser.imgUrl} alt="" /> <span>{prevUser.prompt}</span>{" "}
+          </>
+        ) : (
+          <span>{prevUser.prompt}</span>
+        )}
       </div>
       <div className="ai">
-        <img src="" alt="" />
-        <span>ai</span>
+      {prevFeature == "genImg" ? (
+          <>
+            <img src={prevUser.imgUrl} alt="" /> {!showResult ? <span>Loading..</span> : <span>{showResult}</span>}
+          </>
+        ) : (
+          !showResult ? <span>Loading..</span> : <span>{showResult}</span>
+          
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;

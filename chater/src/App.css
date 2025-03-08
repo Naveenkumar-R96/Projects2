@@ -21,6 +21,7 @@ nav {
   align-items: center;
   padding: 10px 30px;
   font-size: 30px;
+  cursor: pointer;
 }
 
 .hero {
@@ -141,6 +142,11 @@ form input{
   flex-direction: column;
   gap: 20px;
   padding: 20px;
+  overflow-y: auto;
+  scrollbar-width: none; /* For Firefox */
+}
+.chat-page::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
 }
 .user,.ai{
   width:90%;
@@ -150,6 +156,11 @@ form input{
   gap: 20px;
   font-size: 20px;
   border-radius: 30px;
+  display: flex;
+  align-items: start;
+  border-radius: 10px;
+  justify-content: center;
+  flex-direction: column;
 }
 .pop-up{
   width: 200px;
@@ -182,6 +193,10 @@ cursor: pointer;
 }
 #genImg{
   color: aqua;
+}
+
+.user img{
+  width: 200px;
 }
 
 @media (max-width:500px){
