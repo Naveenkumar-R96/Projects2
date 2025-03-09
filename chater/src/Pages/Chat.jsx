@@ -1,28 +1,30 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useContext } from "react";
 import { dataContext, prevUser } from "../contents/UserContext";
-
 const Chat = () => {
-  const { input, setInput, prevInput, setPrevInput, showResult, setShowResult, feature, setFeature, prevFeature, setPrevFeature, genImgUrl, setGenImgUrl } = useContext(dataContext);
-
+  let { input, setInput, prevInput, setPrevInput, showResult, setShowResult,feature,setFeature ,prevFeature,setPrevFeture,genImgUrl,setGenImgUrl} =
+    useContext(dataContext);
+    console.log(prevFeature)
   return (
     <div className="chat-page">
       <div className="user">
-        {prevFeature === "upImg" ? (
+        {prevFeature == "upImg" ? (
           <>
-            {prevUser.imgUrl ? <img src={prevUser.imgUrl} alt="" /> : <span>No image available</span>} <span>{prevUser.prompt}</span>
+            <img src={prevUser.imgUrl} alt="" /> <span>{prevUser.prompt}</span>{" "}
           </>
         ) : (
           <span>{prevUser.prompt}</span>
         )}
       </div>
       <div className="ai">
-        {prevFeature === "genImg" ? (
+      {prevFeature == "genImg" ? (
           <>
-            {genImgUrl ? <img src={genImgUrl} className="genImage" alt="Generated" /> : <span>Generating image.. </span>}
+            {!genImgUrl ? <span>Generating imgage...</span> : <img src={genImgUrl} alt="" className="genic" />}
           </>
-        ) : (
-          !showResult ? <span>Loading...</span> : <span>{showResult}</span>
-        )}
+        ) :<>
+          {!showResult ? <span>Loading..</span> : <span>{showResult}</span>}
+          {console.log("no")}
+        </>}
       </div>
     </div>
   );

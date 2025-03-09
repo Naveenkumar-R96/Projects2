@@ -123,7 +123,7 @@ const Home = () => {
               <RiImageAddLine className="icon" />
               <span>Upload image</span>
             </div>
-            <div className="getImg" onClick={() => {setFeature("genImg");setPrevFeature("genImg")}}>
+            <div className="getImg" onClick={() => {setFeature("genImg");setPrevFeature("genImg");console.log(feature)}}>
               <RiImageLine className="icon" />
               <span>Get image</span>
             </div>
@@ -143,8 +143,10 @@ const Home = () => {
         onSubmit={(e) => {
           e.preventDefault();
           if (input) {
+            console.log(feature);
             if (feature === "genImg") {
               handleGenerateImg();
+              console.log("yes");
             } else {
               handleSubmit(e);
             }
@@ -184,7 +186,7 @@ const Home = () => {
         <input
           type="text"
           placeholder="Ask something..."
-          onChange={(e) => {setInput(e.target.value);setFeature("chat")}}
+          onChange={(e) => {setInput(e.target.value); showResult && setShowResult("")}}
           value={input}
         />
         {input ? (

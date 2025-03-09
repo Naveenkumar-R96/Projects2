@@ -208,7 +208,10 @@ form input {
   width: 100%;
   max-width: 200px;
 }
-
+.genic{
+  width: 100%;
+  max-width: 200px;
+}
 .genImage {
   width: 100%;
   max-width: 200px;
