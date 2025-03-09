@@ -8,6 +8,7 @@ import Chat from "./Chat";
 import { dataContext } from "../contents/UserContext";
 import { user, prevUser } from "../contents/UserContext";
 import { generateResponse } from "../gemini";
+import { query } from "../huggingFace";
 
 const Home = () => {
   let {
@@ -21,73 +22,113 @@ const Home = () => {
     setFeature,
     showResult,
     setShowResult,
-    prevFeature,setPrevFeature
+    prevFeature,
+    setPrevFeature,
+    genImgUrl,
+    setGenImgUrl,
   } = useContext(dataContext);
 
   const handleSubmit = async (e) => {
-    console.log(feature)
-    setPrevFeature(feature);
-    setFeature('chat');
     e.preventDefault();
     setStartRes(true);
     setInput("");
+
+    console.log(feature);
+    setPrevFeature(feature);
+    setFeature("chat");
+
     prevUser.data = user.data;
     prevUser.mime_type = user.mime_type;
     prevUser.imgUrl = user.imgUrl;
     prevUser.prompt = input;
-    setInput("");
+
+    console.log(prevUser);
+
     let result = await generateResponse();
     setShowResult(result);
+
     user.data = null;
-      user.mime_type = null;
-      user.imgUrl = null;
+    user.mime_type = null;
+    user.imgUrl = null;
   };
 
   const handleImage = (e) => {
-    setFeature('upImg');
+    setFeature("upImg");
     let file = e.target.files[0];
 
     let reader = new FileReader();
     reader.onload = (e) => {
-      let base64 = e.target.result.split(',')[1];
+      let base64 = e.target.result.split(",")[1];
+
       user.data = base64;
       user.mime_type = file.type;
-      console.log(e);
+
       user.imgUrl = `data:${user.mime_type};base64,${user.data}`;
+
+      alert("image uploaded successfully, ask what you want to know");
     };
 
     reader.readAsDataURL(file);
   };
 
+  const handleGenerateImg = async (e) => {
+    setStartRes(true);
+    setPrevFeature(feature);
+    prevUser.prompt = input;
+    setInput("");
+    setGenImgUrl("");
+    setFeature("chat");
+
+    let result = await query().then((e) => {
+      let url = URL.createObjectURL(e);
+      console.log(url);
+      console.log(e);
+      setGenImgUrl(url);
+      console.log(genImgUrl);
+    });
+  };
+
   return (
     <div className="home">
       <nav>
-        <div className="logo" onClick={()=>{
-          setStartRes(false);
-          setFeature('chat');
-        }}>Smart Ai Bot</div>
+        <div
+          className="logo"
+          onClick={() => {
+            setStartRes(false);
+            setFeature("chat");
+          }}
+        >
+          Smart Ai Bot
+        </div>
       </nav>
-      <input type="file" accept='image/*' hidden id='inputImg' onChange={handleImage} />
+
+      <input
+        type="file"
+        accept="image/*"
+        hidden
+        id="inputImg"
+        onChange={handleImage}
+      />
       {!startRes ? (
         <div className="hero">
           <span id="tag">What can I help with you?</span>
           <div className="cate">
-            <div className="upImg" onClick={() => { document.getElementById('inputImg').click() }}>
+            <div
+              className="upImg"
+              onClick={() => {
+                document.getElementById("inputImg").click();
+                setFeature("upImg");
+              }}
+            >
               <RiImageAddLine className="icon" />
               <span>Upload image</span>
             </div>
-            <div className="getImg">
-              <RiImageLine
-                className="icon"
-                onClick={() => setFeature("genImg")}
-              />
+            <div className="getImg" onClick={() => {setFeature("genImg");setPrevFeature("genImg")}}>
+              <RiImageLine className="icon" />
               <span>Get image</span>
             </div>
-            <div className="chat">
-              <MdOutlineMarkUnreadChatAlt
-                className="icon"
-                onClick={() => setFeature("chat")}
-              />
+            <div className="chat" onClick={() => setFeature("chat")}>
+              <MdOutlineMarkUnreadChatAlt className="icon" />
               <span>Let's chat</span>
             </div>
           </div>
@@ -102,17 +143,29 @@ const Home = () => {
         onSubmit={(e) => {
           e.preventDefault();
           if (input) {
-            handleSubmit(e);
+            if (feature === "genImg") {
+              handleGenerateImg();
+            } else {
+              handleSubmit(e);
+            }
           }
         }}
       >
         {popUp ? (
           <div className="pop-up">
-            <div className="select-up" onClick={() => {setPopUp(false); setFeature("chat"); document.getElementById('inputImg').click() }}>
+            <div
+              className="select-up"
+              onClick={(e) => {
+                setPopUp(false);
+                setFeature("upImg");
+                document.getElementById("inputImg").click();
+              }}
+            >
               <RiImageAddLine className="icon" />
               <span>Upload image</span>
             </div>
-            <div className="select-up" onClick={() => setFeature("genImg")}>
+
+            <div className="select-up" onClick={() => {setFeature("genImg");setPopUp(false)}}>
               <RiImageLine className="icon" />
               <span>Get image</span>
             </div>
@@ -121,7 +174,9 @@ const Home = () => {
 
         <div className="add" onClick={() => setPopUp((prev) => !prev)}>
           {feature === "genImg" ? (
-            <RiImageLine className="ico" id="genImg" />
+            <RiImageLine className="icon" id="genImg" />
+          ) : feature === "upImg" ? (
+            <RiImageAddLine className="icon" />
           ) : (
             <FiPlus className="ico" />
           )}
@@ -129,7 +184,7 @@ const Home = () => {
         <input
           type="text"
           placeholder="Ask something..."
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => {setInput(e.target.value);setFeature("chat")}}
           value={input}
         />
         {input ? (

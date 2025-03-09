@@ -2,8 +2,9 @@ import { prevUser } from "./contents/UserContext";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 const Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-console.log(apiKey)
-export const generateResponse = async (params) => {
+
+export const generateResponse = async () => {
+
     let RequestOption = {
         method: "POST",
         headers: {
@@ -19,7 +20,7 @@ export const generateResponse = async (params) => {
                             "data": prevUser.data
                         }
                     } : null,
-                ].filter(part => part !== null) // Filter out null values
+                ].filter(part => part !== null) 
             }]
         })
     };
@@ -35,6 +36,6 @@ export const generateResponse = async (params) => {
         return apiResponse;
     } catch (error) {
         console.error("Error generating response:", error);
-        throw error; // Re-throw the error after logging it
+        throw error; 
     }
 };

@@ -18,7 +18,7 @@ export let prevUser={
 const UserContext = ({ children }) => {
 
     
-
+    let[genImgUrl,setGenImgUrl]=useState("");
     let [startRes,setStartRes]=useState(false);
     let [popUp,setPopUp]=useState(false);
     let [input,setInput]=useState('');
@@ -31,7 +31,8 @@ const UserContext = ({ children }) => {
         input,setInput,
         feature,setFeature,
         showResult,setShowResult,
-        prevFeature,setPrevFeature
+        prevFeature,setPrevFeature,
+        genImgUrl,setGenImgUrl
     }
   return (
     <div>
