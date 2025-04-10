@@ -3,7 +3,7 @@ import { food_items } from "../../food";
 export const dataContext = createContext();
 
 const Context = ({ children }) => {
-
+  
   const [addItem,setAddItem] = useState([])
 
   const total=addItem.reduce((acc,curr)=>acc+curr.food_quantity*curr.price,0)

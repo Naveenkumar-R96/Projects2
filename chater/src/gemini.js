@@ -31,6 +31,7 @@ export const generateResponse = async () => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         let data = await response.json();
+        console.log(data)
         let apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
         console.log(apiResponse);
         return apiResponse;

@@ -41,6 +41,7 @@ const Home = () => {
     prevUser.mime_type = user.mime_type;
     prevUser.imgUrl = user.imgUrl;
     prevUser.prompt = input;
+  
 
     console.log(prevUser);
 

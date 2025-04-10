@@ -1,8 +1,8 @@
 import React from "react";
 import { dataContext } from "../Pages/Context";
 import { useContext } from "react";
-const Card = ({ name, image, id, price, type ,item}) => {
-  const {addingItem,addItem} = useContext(dataContext)
+const Card = ({ name, image, id, price, type, item }) => {
+  const { addingItem, addItem } = useContext(dataContext);
   return (
     <div className=" ">
       <div className="w-[280px] h-auto max-h-[380px] min-h-[280px] bg-white p-2 mb-2 rounded-lg shadow-lg ">
