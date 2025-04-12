@@ -11,9 +11,45 @@ import todo from '../../assets/img/todo.png';
 import movie from '../../assets/img/movie.png';
 import wheather from '../../assets/img/wheather.png';
 import first from '../../assets/img/first.png';
+import chat from '../../assets/img/chat.png';
+import mve from '../../assets/img/mve.png';
+import food from '../../assets/img/food.png';
 
 const Works = () => {
   const [cards, setCards] = useState([
+    {
+      title:"Food App",
+      description:
+        "A food app built with React and Tailwind CSS, featuring a search bar and API integration to fetch and display food data.",
+      image: food,
+      isFlipped: false,
+      isAnimating: false,
+      backing:"#git #javascript #tailwind #react",
+      goto:"https://food-app-five-chi.vercel.app/",
+      github:"https://github.com/Naveenkumar-R96/Project"
+    },
+    {
+      title:"Chat Bot",
+      description:
+        "A chat bot application built with React and Tailwind CSS, featuring a user-friendly interface for chatting with a bot.",
+      image: chat,
+      isFlipped: false,
+      isAnimating: false,
+      backing:"#git #javascript #tailwind #react",
+      goto:"https://naveen-ai-31.netlify.app/",
+      github:"https://github.com/Naveenkumar-R96/Project"
+    },
+    {
+      title:"Movie Client",
+      description:
+        "A movie client application built with React, featuring a user-friendly interface for searching and displaying movie information.",
+      image: mve,
+      isFlipped: false,
+      isAnimating: false,
+      backing:"#git #javascript #tailwind #react",
+      goto:"https://naveen-movie-31.vercel.app/",
+      github:"https://github.com/Naveenkumar-R96/Project"
+    },
     {
       title: "Shoe Store",
       description:
