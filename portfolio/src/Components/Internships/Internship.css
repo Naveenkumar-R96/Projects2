@@ -1,0 +1,6 @@
+.inten {
+    background-image: url('../../assets/img/blackline.jpg');
+    background-color: rgba(0, 0, 0, 0.7); /* Black color with 50% opacity */
+    background-blend-mode: overlay;
+   
+}

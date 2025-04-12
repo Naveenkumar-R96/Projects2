@@ -1,0 +1,41 @@
+.flip-card{
+    perspective: 1000px;
+}
+.flip-card-inner{
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+.flip-card-front,.flip-card-back{
+    position: absolute;
+    backface-visibility: hidden;
+}
+.flip-card-back{
+    transform: rotateY(180deg);
+}
+.wrape::-webkit-scrollbar{
+    width: 0;
+    perspective: 1000px;
+}
+.wrapper{
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 30%;
+    overflow-x: auto;
+    gap: 20px;
+    align-items: center;
+}
+.wrape{
+overflow-x: auto;
+}
+.cards{
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+.back{
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border: 2px solid white;
+}
+.bc-button{
+    border-bottom-left-radius: 30px;
+}

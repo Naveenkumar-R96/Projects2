@@ -1,0 +1,44 @@
+.infoo-box{
+    display: flex;
+    padding: 10px 20px;
+    width: 100%;
+  
+    margin-bottom: 20px;
+}
+.infoo-box .icons{
+    padding: 20px 20px;
+    background: linear-gradient(to right,#383737,#181818);
+    border-radius: 10px; 
+    border-radius: 10px;
+    text-align: center;
+
+}
+.details{
+    margin-left: 20px;
+}
+.details h4{
+    text-transform: uppercase;
+    font-size: 14px;
+    color:#525151;
+    font-weight: 600;
+}
+.details p{
+    color: #b6b4b4;
+    font-size: 17px;
+}
+.rightu {
+   
+    background: linear-gradient(to right,#383737,#181818);
+    border-radius: 10px; 
+}
+.item{
+ animation: jump 2s infinite;
+}
+ @keyframes jump {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+} 
