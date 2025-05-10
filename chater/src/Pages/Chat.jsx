@@ -19,10 +19,10 @@ const Chat = () => {
       <div className="ai">
       {prevFeature == "genImg" ? (
           <>
-            {!genImgUrl ? <span>Generating imgage...</span> : <img src={genImgUrl} alt="" className="genic" />}
+            {!genImgUrl ? <span>Generating image...</span> : <img src={genImgUrl} alt="" className="genic" />}
           </>
         ) :<>
-          {!showResult ? <span>Loading..</span> : <span>{showResult}</span>}
+          {!showResult ? <span>Loading...</span> : <span>{showResult}</span>}
           {console.log("no")}
         </>}
       </div>

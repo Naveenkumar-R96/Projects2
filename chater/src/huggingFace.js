@@ -2,18 +2,31 @@ import { prevUser } from "./contents/UserContext";
 
 
 const apiKey = import.meta.env.VITE_ANOTHER_KEY;
+
 export async function query() {
-	const response = await fetch(
-		"https://router.huggingface.co/hf-inference/models/ZB-Tech/Text-to-Image",
+	try {
+	  const response = await fetch(
+		"https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev", // Use the correct model URL
 		{
-			headers: {
-				Authorization: `Bearer ${apiKey}`,
-				"Content-Type": "application/json",
-			},
-			method: "POST",
-			body: JSON.stringify({"inputs":prevUser.prompt}),
+		  method: "POST",
+		  headers: {
+			Authorization: `Bearer ${apiKey}`,
+			"Content-Type": "application/json",
+			Accept: "image/png",
+		  },
+		  body: JSON.stringify({ inputs: prevUser.prompt }), // Use the prompt from prevUser
 		}
-	);
-	const result = await response.blob();
-	return result;
-}
+	  );
+  
+	  if (!response.ok) {
+		const errorText = await response.text();
+		throw new Error(`HTTP error! Status: ${response.status} - ${errorText}`);
+	  }
+  
+	  const result = await response.blob();
+	  return result;
+	} catch (error) {
+	  console.error("Error occurred during image generation:", error);
+	  throw error;  // Re-throwing the error for further handling if needed
+	}
+  }
