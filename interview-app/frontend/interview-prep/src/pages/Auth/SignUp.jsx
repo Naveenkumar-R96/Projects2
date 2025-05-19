@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/Inputs/Input";
+import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector";
+import { validateEmail } from "../../util/helper";
 const SignUp = ({ setCurrentPage }) => {
   const [profilePic, setProfilePic] = useState(null);
   const [fullName, setFullName] = useState("");
@@ -13,12 +15,41 @@ const SignUp = ({ setCurrentPage }) => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    let profileImageUrl="";
+
+    if(!fullName){
+      setError("Please enter full Name:")
+      return
+    }
+    if(!validateEmail(email)){
+      setError("Please enter a valid email address.");
+      return;
+    }
+    if(!password(password)){
+      setError("Please enter a valid password ");
+      return;
+    }
+
+    setError("")
+
+    try{
+
+    }catch(error){
+      if(error.response && error.response.data.message){
+        setError(error.response.data.message)
+      }
+      else{
+        setError("someting wen wrong,Please try again")
+      }
+    }
   };
   return (
     <div className="w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center ">
       <h3 className="font-lg font-semibold text-black">Create An Account</h3>
       <p className="text-xs text-slate-700 mt-[5px] mb-6">Join us today entering your details below,</p>
       <form action="" onSubmit={handleSignUp}>
+        <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
         <div className="">
           <Input
            value={fullName}

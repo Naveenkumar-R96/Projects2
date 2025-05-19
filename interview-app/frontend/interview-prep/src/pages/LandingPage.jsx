@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { LuSparkles } from "react-icons/lu";
 import Login from "../pages/Auth/Login"
-import Signup from "../pages/Auth/Signup";
+import Signup from "../pages/Auth/SignUp";
 import Model from "../components/Model";
 const LandingPage = () => {
   const navigate = useNavigate();
