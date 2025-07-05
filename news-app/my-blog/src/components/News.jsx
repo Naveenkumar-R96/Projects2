@@ -6,6 +6,7 @@ import "./News.css"; // Assuming you have a CSS file for styling
 import axios from "axios"; // If you need to fetch data from an API
 import { useEffect } from "react";
 import NewsModel from "./NewsModel"; // Assuming you have a NewsModel component
+import Bookmarks from "./Bookmarks";
 const categories = [
   "general",
   "world",
@@ -24,30 +25,45 @@ const News = () => {
   const [selectedCategory, setSelectedCategory] = useState("general");
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [showModel,setShowModel] = useState(false);
+  const [showModel, setShowModel] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [Bookmark, setBookmark] = useState(() => {
+    const saved = localStorage.getItem("bookmarkedArticles");
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [showBookmarks, setShowBookmarks] = useState(false);
   const apikey = import.meta.env.VITE_NEWS_API;
 
-  const handleSearch=(e)=>{
+  const handleSearch = (e) => {
     e.preventDefault();
     setSearchQuery(searchInput);
     setSearchInput("");
-  }
+  };
 
-  const handleArticle=(article) => {
+  const handleArticle = (article) => {
     setSelectedArticle(article);
     setShowModel(true);
-  }
+  };
+
+  const handleBookmark = (article) => {
+    setBookmark((prevBookmarks) => {
+      const updatedBookmarks = [...prevBookmarks, article];
+      localStorage.setItem(
+        "bookmarkedArticles",
+        JSON.stringify(updatedBookmarks)
+      );
+      console.log("Article bookmarked:", updatedBookmarks);
+      return updatedBookmarks;
+    });
+  };
 
   useEffect(() => {
     const fetchNews = async () => {
       let url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&apikey=${apikey}`;
 
       if (searchQuery) {
-        url=` https://gnews.io/api/v4/search?q=${searchQuery}&apikey=da5ee64f23c8dff3f7a1418c2cd40d7f`
+        url = ` https://gnews.io/api/v4/search?q=${searchQuery}&apikey=da5ee64f23c8dff3f7a1418c2cd40d7f`;
       }
-
-    
 
       try {
         const response = await axios.get(url);
@@ -66,7 +82,7 @@ const News = () => {
     };
 
     fetchNews();
-  }, [selectedCategory,searchQuery]);
+  }, [selectedCategory, searchQuery]);
 
   const handleCategoryClick = (e, category) => {
     e.preventDefault();
@@ -79,7 +95,12 @@ const News = () => {
         <h1 className="logo">News & Blogs</h1>
         <div className="search-box">
           <form action="" onSubmit={handleSearch}>
-            <input type="text" placeholder="Search News.." value={searchInput} onChange={(e)=>setSearchInput(e.target.value)}/>
+            <input
+              type="text"
+              placeholder="Search News.."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
             <button type="submit">
               <i className="fa-solid-fa-magnifying-glass"></i>
             </button>
@@ -96,13 +117,18 @@ const News = () => {
             <h1 className="nav-heading">Categories</h1>
             <div className="nav-links">
               {categories.map((category, index) => (
-                <a href="#" className="nav-link" key={index} onClick={(e) => handleCategoryClick(e, category)}>
+                <a
+                  href="#"
+                  className="nav-link"
+                  key={index}
+                  onClick={(e) => handleCategoryClick(e, category)}
+                >
                   {category}
                 </a>
               ))}
-             
-              <a href="#" className="nav-link">
-                Bookmarks <i className="fa-regular fa-bookmark"></i>
+
+              <a href="#" className="nav-link" onClick={()=>setShowBookmarks(true)}>
+                Bookmarks <i className="fa-regular fa-bookmark" ></i>
               </a>
             </div>
           </nav>
@@ -113,7 +139,13 @@ const News = () => {
               <img src={headline.image} alt="headline title" />
               <h2 className="headline-title">
                 {headline.title}
-                <i className="fa-regular fa-bookmark bookmar"></i>
+                <i
+                  className="fa-regular fa-bookmark bookmar"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleBookmark(headline);
+                  }}
+                ></i>
               </h2>
             </div>
           )}
@@ -121,17 +153,32 @@ const News = () => {
           <div className="news-grid">
             {news &&
               news.map((article, index) => (
-                <div className="news-grid-item" key={index} onClick={() => handleArticle(article)}>
+                <div
+                  className="news-grid-item"
+                  key={index}
+                  onClick={() => handleArticle(article)}
+                >
                   <img src={article.image} alt={article.title} />
                   <h3>
                     {article.title}
-                    <i className="fa-regular fa-bookmark bookmar"></i>
+                    <i
+                      className="fa-regular fa-bookmark bookmar"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleBookmark(article);
+                      }}
+                    ></i>
                   </h3>
                 </div>
               ))}
           </div>
         </div>
-        <NewsModel show={showModel} article={selectedArticle} onClose={()=>setShowModel(false)}/>
+        <NewsModel
+          show={showModel}
+          article={selectedArticle}
+          onClose={() => setShowModel(false)}
+        />
+        {showBookmarks && (<Bookmarks Bookmark={Bookmark} setBookmark={setBookmark} setShowBookmarks={setShowBookmarks}/>)}
         <div className="my-blogs">My-blogs</div>
         <div className="weather-calendar">
           <Weather />
