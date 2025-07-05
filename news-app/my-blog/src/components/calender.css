@@ -4,5 +4,19 @@
     height: calc(55% - 2rem);
     background-color: #111214;
     border-radius: 1rem;
+    padding: 1.5rem;
+    display: grid;
+    place-items: center;
     
 }
+
+.navigate-date{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 1rem;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+.days{}
