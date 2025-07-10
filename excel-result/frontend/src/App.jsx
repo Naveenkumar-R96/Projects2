@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [message, setMessage] = useState("Checking result status...");
+  const [lastCheck, setLastCheck] = useState(null);
+
+  const fetchStatus = async () => {
+    try {
+      const res = await axios.get("http://localhost:3001");
+      setMessage("Backend is running. Result checker active.");
+      setLastCheck(new Date().toLocaleTimeString());
+    } catch (error) {
+      setMessage("Backend not responding...");
+    }
+  };
+
+  useEffect(() => {
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 60000); // check every 1 min
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ fontFamily: "sans-serif", textAlign: "center", marginTop: "5rem" }}>
+      <h1>🎓 Result Checker Dashboard</h1>
+      <p>Status: {message}</p>
+      <p>Last Checked: {lastCheck}</p>
+      <button onClick={fetchStatus}>Check Now</button>
+    </div>
+  );
 }
 
-export default App
+export default App;
+ 
