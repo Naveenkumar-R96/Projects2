@@ -5,6 +5,7 @@ const cors = require("cors");
 const cron = require("node-cron");
 const fetchResult = require("./scraper");
 const sendTelegramMessage = require("./telegram");
+const sendEmail = require("./mailer");
 
 const app = express();
 let alreadyNotified = false;
@@ -15,15 +16,20 @@ cron.schedule("* * * * *", async () => {
   try {
     console.log("Checking for result...");
     const result = await fetchResult(process.env.REGISTER_NO, process.env.DOB);
+    
 
-    if (result && result.subjects?.length /* && !alreadyNotified */) {
+    if (result && result.subjects?.length/*  && !alreadyNotified */) {
       const formatted = result.subjects.map(r =>
         `${r.sem} | ${r.code} | ${r.subject} | ${r.grade} (${r.result})`
       ).join("\n");
 
       const message = `🎓 RESULT PUBLISHED\n📘 Semester: ${result.lastSem}\n📊 CGPA: ${result.cgpa}\n\n${formatted}`;
+      
 
       await sendTelegramMessage(message);
+      const emailHtml= require("./emialHtml")(result);
+      await sendEmail("Result Published", emailHtml);
+
       /* alreadyNotified = true; */
     }
   } catch (err) {
