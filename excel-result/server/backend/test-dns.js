@@ -1,20 +1,24 @@
-const { chromium } = require('playwright');
+// backend/index.js
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
 
-(async () => {
-  const browser = await chromium.launch({ headless: false }); // Set to false to see it
-  const page = await browser.newPage();
+const userRoutes = require("../routes/userRoutes");
 
-  try {
-    console.log("🧭 Navigating to your college homepage...");
-    await page.goto('http://103.105.40.112', { timeout: 60000, waitUntil: "load" });
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-    console.log("📸 Taking screenshot...");
-    await page.screenshot({ path: 'playwright-homepage.png' });
-    console.log("✅ Screenshot saved as playwright-homepage.png");
+// MongoDB connection
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ Connected to MongoDB Atlas"))
+  .catch((err) => console.error("❌ Connection error:", err.message));
 
-  } catch (err) {
-    console.error("❌ Failed to load page:", err.message);
-  } finally {
-    await browser.close();
-  }
-})();
+// Routes
+app.use("/api/users", userRoutes);
+
+app.get("/", (_, res) => res.send("🎯 Backend running"));
+
+app.listen(3001, () => console.log("🚀 Server running on port 3001"));

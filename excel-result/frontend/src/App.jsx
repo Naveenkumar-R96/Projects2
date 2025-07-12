@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+/* import { useEffect, useState } from "react";
 import axios from "axios";
 
 function App() {
@@ -32,4 +32,17 @@ function App() {
 }
 
 export default App;
- 
+  */
+
+
+// frontend/src/App.jsx
+import React from "react";
+import UserForm from "./components/UserForm";
+
+const App = () => (
+  <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <UserForm />
+  </div>
+);
+
+export default App;

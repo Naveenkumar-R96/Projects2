@@ -1,27 +1,26 @@
-// mailer.js
 const nodemailer = require("nodemailer");
 
-const sendEmail = async (subject, message) => {
+const sendEmail = async (to, subject, html) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.EMAIL_USER, // your email
+      user: process.env.EMAIL_USER, // your Gmail
       pass: process.env.EMAIL_PASS, // your app password
     },
   });
 
   const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: process.env.EMAIL_TO, // recipient
+    from: `"Result Bot" <${process.env.EMAIL_USER}>`,
+    to: to, // dynamic now
     subject: subject,
-    html: message,
+    html: html,
   };
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log("📩 Email sent successfully!");
+    console.log(`📧 Email sent to ${to}`);
   } catch (error) {
-    console.error("❌ Failed to send email:", error.message);
+    console.error(`❌ Failed to send email to ${to}:`, error.message);
   }
 };
 
